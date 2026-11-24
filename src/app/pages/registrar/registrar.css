@@ -1,0 +1,212 @@
+.encabezado-pagina {
+  margin-bottom: 28px;
+}
+
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #2563eb;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.encabezado-pagina h1 {
+  color: #14243b;
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.encabezado-pagina p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Panel del formulario */
+
+.panel {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 950px;
+}
+
+.panel-titulo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.icono {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  background: #dbeafe;
+  color: #2563eb;
+  border-radius: 10px;
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.panel-titulo h2 {
+  font-size: 19px;
+  color: #14243b;
+}
+
+.panel-titulo p {
+  color: #64748b;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* Distribución de campos */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.completo {
+  grid-column: 1 / -1;
+}
+
+.campo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 13px 14px;
+  background: white;
+  color: #1e293b;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px #dbeafe;
+}
+
+.campo input:disabled {
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Validaciones */
+
+.error {
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.ng-invalid.ng-touched:not(form) {
+  border-color: #dc2626;
+}
+
+.mensaje-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 14px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* Botones */
+
+.form-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 24px;
+  margin-top: 30px;
+}
+
+.btn-cancelar,
+.btn-guardar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-cancelar {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-cancelar:hover {
+  background: #e2e8f0;
+}
+
+.btn-guardar {
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+.btn-guardar:hover {
+  background: #1d4ed8;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+  .panel {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .form-acciones {
+    flex-direction: column-reverse;
+  }
+
+  .encabezado-pagina h1 {
+    font-size: 25px;
+  }
+}
