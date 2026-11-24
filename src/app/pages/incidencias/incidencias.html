@@ -1,1 +1,211 @@
-<p>incidencias works!</p>
+<div class="encabezado-pagina">
+
+  <div>
+    <span class="subtitulo">GESTIÓN INSTITUCIONAL</span>
+    <h1>Incidencias</h1>
+    <p>Consulta y administra las incidencias registradas.</p>
+  </div>
+
+  <a routerLink="/registrar" class="btn-nuevo">
+    <i class="bi bi-plus-lg"></i>
+    Nueva incidencia
+  </a>
+
+</div>
+
+<section class="panel">
+
+  <div class="panel-titulo">
+    <h2>Listado de incidencias</h2>
+    <span>{{ incidencias.length }} registros</span>
+  </div>
+
+  <!-- Buscador y filtros -->
+
+  <div class="filtros">
+
+    <div class="buscador">
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        placeholder="Buscar por título..."
+        aria-label="Buscar por título"
+        [(ngModel)]="busqueda">
+    </div>
+
+    <select [(ngModel)]="prioridad" aria-label="Prioridad">
+      <option value="">Todas las prioridades</option>
+      <option value="Alta">Alta</option>
+      <option value="Media">Media</option>
+      <option value="Baja">Baja</option>
+    </select>
+
+    <select [(ngModel)]="estado" aria-label="Estado">
+      <option value="">Todos los estados</option>
+      <option value="Pendiente">Pendiente</option>
+      <option value="En proceso">En proceso</option>
+      <option value="Resuelta">Resuelta</option>
+    </select>
+
+    <button class="btn-limpiar" (click)="limpiarFiltros()">
+      <i class="bi bi-arrow-clockwise"></i>
+      Limpiar
+    </button>
+
+  </div>
+
+  <!-- Tabla de incidencias -->
+
+  <div class="tabla-responsive">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Título</th>
+          <th>Responsable</th>
+          <th>Prioridad</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (i of incidenciasFiltradas; track i.codigo) {
+
+          <tr>
+
+            <td class="codigo">{{ i.codigo }}</td>
+
+            <td class="titulo">{{ i.titulo }}</td>
+
+            <td>{{ i.responsable }}</td>
+
+            <td>
+              <span class="etiqueta"
+                [class.alta]="i.prioridad === 'Alta'"
+                [class.media]="i.prioridad === 'Media'"
+                [class.baja]="i.prioridad === 'Baja'">
+                {{ i.prioridad }}
+              </span>
+            </td>
+
+            <td>
+              <span class="etiqueta"
+                [class.pendiente]="i.estado === 'Pendiente'"
+                [class.proceso]="i.estado === 'En proceso'"
+                [class.resuelta]="i.estado === 'Resuelta'">
+                {{ i.estado }}
+              </span>
+            </td>
+
+            <td>{{ i.fecha }}</td>
+
+            <td>
+
+              <div class="acciones">
+
+                <a
+                  [routerLink]="['/detalle', i.codigo]"
+                  class="btn-ver"
+                  title="Visualizar"
+                  aria-label="Visualizar incidencia">
+                  <i class="bi bi-eye"></i>
+                </a>
+
+                <a
+                  [routerLink]="['/editar', i.codigo]"
+                  class="btn-editar"
+                  title="Editar"
+                  aria-label="Editar incidencia">
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+
+                <button
+                  class="btn-eliminar"
+                  title="Eliminar"
+                  aria-label="Eliminar incidencia"
+                  (click)="confirmarEliminar(i)">
+                  <i class="bi bi-trash"></i>
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        } @empty {
+
+          <tr>
+            <td colspan="7" class="sin-resultados">
+              <i class="bi bi-inbox"></i>
+              <h3>No se encontraron incidencias</h3>
+              <p>Intenta modificar los filtros de búsqueda.</p>
+            </td>
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <div class="pie-tabla">
+    Mostrando {{ incidenciasFiltradas.length }}
+    de {{ incidencias.length }} incidencias
+  </div>
+
+</section>
+
+<!-- Modal de confirmación -->
+
+@if (incidenciaSeleccionada) {
+
+  <div class="modal-fondo">
+
+    <div class="modal" role="dialog" aria-modal="true"
+         aria-labelledby="titulo-modal">
+
+      <div class="icono-alerta">
+        <i class="bi bi-trash"></i>
+      </div>
+
+      <h2 id="titulo-modal">¿Eliminar incidencia?</h2>
+
+      <p>
+        Estás a punto de eliminar la incidencia
+        <strong>{{ incidenciaSeleccionada.codigo }}</strong>.
+      </p>
+
+      <p>{{ incidenciaSeleccionada.titulo }}</p>
+
+      <small>Esta acción no se puede deshacer.</small>
+
+      <div class="modal-acciones">
+
+        <button
+          class="btn-cancelar"
+          (click)="cancelarEliminar()">
+          Cancelar
+        </button>
+
+        <button
+          class="btn-confirmar"
+          (click)="eliminar()">
+          Eliminar incidencia
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
