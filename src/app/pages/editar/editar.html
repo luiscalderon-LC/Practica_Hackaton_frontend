@@ -1,1 +1,226 @@
-<p>editar works!</p>
+<div class="encabezado-pagina">
+
+  <a routerLink="/incidencias" class="volver">
+    <i class="bi bi-arrow-left"></i>
+    Volver a incidencias
+  </a>
+
+  <h1>Editar incidencia</h1>
+  <p>Actualiza la información de la incidencia registrada.</p>
+
+</div>
+
+@if (incidencia; as i) {
+
+  <section class="panel">
+
+    <div class="panel-titulo">
+
+      <div class="icono">
+        <i class="bi bi-pencil-square"></i>
+      </div>
+
+      <div>
+        <h2>Actualizar información</h2>
+        <p>Modifica los campos que sean necesarios.</p>
+      </div>
+
+    </div>
+
+    <form #formulario="ngForm"
+          (ngSubmit)="actualizar(formulario)">
+
+      <div class="form-grid">
+
+        <!-- Código -->
+
+        <div class="campo">
+
+          <label for="codigo">Código de incidencia</label>
+
+          <input
+            id="codigo"
+            type="text"
+            [value]="i.codigo"
+            disabled>
+
+        </div>
+
+        <!-- Fecha -->
+
+        <div class="campo">
+
+          <label for="fecha">Fecha *</label>
+
+          <input
+            id="fecha"
+            type="date"
+            name="fecha"
+            [(ngModel)]="i.fecha"
+            #fecha="ngModel"
+            required>
+
+          @if (fecha.invalid && fecha.touched) {
+            <small class="error">
+              Selecciona una fecha.
+            </small>
+          }
+
+        </div>
+
+        <!-- Título -->
+
+        <div class="campo completo">
+
+          <label for="titulo">Título de la incidencia *</label>
+
+          <input
+            id="titulo"
+            type="text"
+            name="titulo"
+            [(ngModel)]="i.titulo"
+            #titulo="ngModel"
+            required
+            minlength="5"
+            maxlength="100">
+
+          @if (titulo.invalid && titulo.touched) {
+            <small class="error">
+              Ingresa un título de al menos 5 caracteres.
+            </small>
+          }
+
+        </div>
+
+        <!-- Descripción -->
+
+        <div class="campo completo">
+
+          <label for="descripcion">Descripción *</label>
+
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            rows="5"
+            [(ngModel)]="i.descripcion"
+            #descripcion="ngModel"
+            required
+            minlength="10"
+            maxlength="500">
+          </textarea>
+
+          @if (descripcion.invalid && descripcion.touched) {
+            <small class="error">
+              Ingresa una descripción de al menos 10 caracteres.
+            </small>
+          }
+
+        </div>
+
+        <!-- Responsable -->
+
+        <div class="campo completo">
+
+          <label for="responsable">Responsable *</label>
+
+          <input
+            id="responsable"
+            type="text"
+            name="responsable"
+            [(ngModel)]="i.responsable"
+            #responsable="ngModel"
+            required
+            minlength="3"
+            maxlength="100">
+
+          @if (responsable.invalid && responsable.touched) {
+            <small class="error">
+              Ingresa el nombre del responsable.
+            </small>
+          }
+
+        </div>
+
+        <!-- Prioridad -->
+
+        <div class="campo">
+
+          <label for="prioridad">Prioridad *</label>
+
+          <select
+            id="prioridad"
+            name="prioridad"
+            [(ngModel)]="i.prioridad"
+            required>
+
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+
+          </select>
+
+        </div>
+
+        <!-- Estado -->
+
+        <div class="campo">
+
+          <label for="estado">Estado *</label>
+
+          <select
+            id="estado"
+            name="estado"
+            [(ngModel)]="i.estado"
+            required>
+
+            <option value="Pendiente">Pendiente</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Resuelta">Resuelta</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      @if (mensajeError) {
+        <div class="mensaje-error">
+          <i class="bi bi-exclamation-circle"></i>
+          {{ mensajeError }}
+        </div>
+      }
+
+      <div class="form-acciones">
+
+        <a routerLink="/incidencias" class="btn-cancelar">
+          Cancelar
+        </a>
+
+        <button type="submit" class="btn-guardar">
+          <i class="bi bi-floppy"></i>
+          Guardar cambios
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+} @else {
+
+  <section class="panel">
+
+    <h2>Incidencia no encontrada</h2>
+
+    <p>El registro solicitado no existe o fue eliminado.</p>
+
+    <br>
+
+    <a routerLink="/incidencias" class="btn-cancelar">
+      Volver al listado
+    </a>
+
+  </section>
+
+}
