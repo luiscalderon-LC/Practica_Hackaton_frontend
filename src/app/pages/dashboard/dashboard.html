@@ -1,0 +1,109 @@
+<section class="bienvenida">
+
+  <div>
+    <span>PANEL GENERAL</span>
+    <h1>Gestión de incidencias</h1>
+    <p>Administra y supervisa las incidencias de tu institución.</p>
+
+    <a routerLink="/registrar" class="btn-nuevo">
+      <i class="bi bi-plus-lg"></i>
+      Nueva incidencia
+    </a>
+  </div>
+
+  <i class="bi bi-pc-display ilustracion"></i>
+
+</section>
+
+<section class="estadisticas">
+
+  <div class="tarjeta azul">
+    <i class="bi bi-clipboard-data"></i>
+    <p>Total de incidencias</p>
+    <h2>{{ total }}</h2>
+  </div>
+
+  <div class="tarjeta rojo">
+    <i class="bi bi-clock-history"></i>
+    <p>Pendientes</p>
+    <h2>{{ pendientes }}</h2>
+  </div>
+
+  <div class="tarjeta naranja">
+    <i class="bi bi-arrow-repeat"></i>
+    <p>En proceso</p>
+    <h2>{{ enProceso }}</h2>
+  </div>
+
+  <div class="tarjeta verde">
+    <i class="bi bi-check-circle"></i>
+    <p>Resueltas</p>
+    <h2>{{ resueltas }}</h2>
+  </div>
+
+</section>
+
+<section class="recientes">
+
+  <div class="titulo-tabla">
+    <div>
+      <h2>Incidencias recientes</h2>
+      <p>Últimos registros del sistema</p>
+    </div>
+
+    <a routerLink="/incidencias">
+      Ver todas <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+
+  <div class="tabla-responsive">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Título</th>
+          <th>Prioridad</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (i of recientes; track i.codigo) {
+          <tr>
+            <td class="codigo">{{ i.codigo }}</td>
+            <td>{{ i.titulo }}</td>
+
+            <td>
+              <span class="etiqueta"
+                [class.alta]="i.prioridad === 'Alta'"
+                [class.media]="i.prioridad === 'Media'"
+                [class.baja]="i.prioridad === 'Baja'">
+                {{ i.prioridad }}
+              </span>
+            </td>
+
+            <td>{{ i.estado }}</td>
+            <td>{{ i.fecha }}</td>
+
+            <td>
+              <a [routerLink]="['/detalle', i.codigo]">
+                <i class="bi bi-eye"></i>
+              </a>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6">No hay incidencias registradas.</td>
+          </tr>
+        }
+
+      </tbody>
+    </table>
+
+  </div>
+
+</section>
